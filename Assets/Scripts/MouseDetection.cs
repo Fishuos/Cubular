@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MouseDetection : MonoBehaviour
 {
     Vector2 mousePos;
+    
+    
+   
+ 
 
     [SerializeField] private float rollSpeed = 3;
     private bool isMoving;
@@ -13,15 +18,19 @@ public class MouseDetection : MonoBehaviour
     public bool bottomLeft;
     public bool bottomRight;
 
+
+
+
     private void Update()
     {
         mousePos = Input.mousePosition;
         //   Debug.Log(mousePos);
 
+       
+
         
 
 
-        
 
 
 
@@ -37,6 +46,8 @@ public class MouseDetection : MonoBehaviour
             transform.RotateAround(anchor, axis, rollSpeed);
             yield return new WaitForSeconds(0.01f);
         }
+
+        yield return new WaitForSeconds(0.5f);
 
         isMoving = false;
     }
@@ -100,4 +111,15 @@ public class MouseDetection : MonoBehaviour
         
     }
 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        isMoving = false;
+        Debug.Log("entertrigger");
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
+    }
 }
