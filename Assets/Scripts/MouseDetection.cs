@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -24,7 +25,7 @@ public class MouseDetection : MonoBehaviour
     private void Update()
     {
         mousePos = Input.mousePosition;
-        //   Debug.Log(mousePos);
+        Debug.Log(mousePos);
 
        
 
@@ -35,7 +36,7 @@ public class MouseDetection : MonoBehaviour
 
 
 
-        MousePosition();
+        MousePosition2();
     }
     IEnumerator Roll(Vector3 anchor, Vector3 axis)
     {
@@ -62,8 +63,38 @@ public class MouseDetection : MonoBehaviour
         Vector3 rotationCenter = transform.position + Vector3.Scale((dir + Vector3.down), GetComponent<Renderer>().bounds.size) / 2;
         StartCoroutine(Roll(anchor, axis));
     }
+    void MousePosition2()
+    {
+        if (mousePos.x >= 327  && mousePos.x <= 1475 && mousePos.y >= 626)
+        {
 
-    void MousePosition()
+            Assemble(Vector3.forward);
+
+        }
+        else if (mousePos.x >= 493  && mousePos.x <= 1476 && mousePos.y <= 360)
+        {
+
+            Assemble(Vector3.back);
+
+        }
+
+        else if (mousePos.x <= 492)
+        {
+
+            Assemble(Vector3.left);
+
+        }
+        else if (mousePos.x >=  1475)
+        {
+
+            Assemble(Vector3.right);
+
+        }
+       
+
+
+    }
+    void MousePosition1()
     {
         if (mousePos.x <= 950 && mousePos.y >= 500)
         {
@@ -81,6 +112,7 @@ public class MouseDetection : MonoBehaviour
         else if (mousePos.x >= 951 && mousePos.y >= 500)
         {
             Assemble(Vector3.right);
+
 
 
 
@@ -114,7 +146,7 @@ public class MouseDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isMoving = false;
+        isMoving = true;
         Debug.Log("entertrigger");
     }
 
