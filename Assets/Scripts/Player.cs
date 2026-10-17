@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class MouseDetection : MonoBehaviour
+public class Player : MonoBehaviour
 {
     Vector2 mousePos;
     
@@ -14,10 +14,10 @@ public class MouseDetection : MonoBehaviour
 
     [SerializeField] private float rollSpeed = 3;
     private bool isMoving;
-    public bool topLeft;
-    public bool topRight; 
-    public bool bottomLeft;
-    public bool bottomRight;
+    bool topWallStop;
+    bool leftWallStop;
+    bool bottomWallStop;
+    bool rightWallStop;
 
 
 
@@ -28,13 +28,6 @@ public class MouseDetection : MonoBehaviour
         Debug.Log(mousePos);
 
        
-
-        
-
-
-
-
-
 
         MousePosition2();
     }
@@ -65,26 +58,26 @@ public class MouseDetection : MonoBehaviour
     }
     void MousePosition2()
     {
-        if (mousePos.x >= 327  && mousePos.x <= 1475 && mousePos.y >= 626)
+        if (mousePos.x >= 327  && mousePos.x <= 1475 && mousePos.y >= 626 && topWallStop == false)
         {
 
             Assemble(Vector3.forward);
 
         }
-        else if (mousePos.x >= 493  && mousePos.x <= 1476 && mousePos.y <= 360)
+        else if (mousePos.x >= 493  && mousePos.x <= 1476 && mousePos.y <= 360 && bottomWallStop == false)
         {
 
             Assemble(Vector3.back);
 
         }
 
-        else if (mousePos.x <= 492)
+        else if (mousePos.x <= 492 && leftWallStop == false)
         {
 
             Assemble(Vector3.left);
 
         }
-        else if (mousePos.x >=  1475)
+        else if (mousePos.x >=  1475 && rightWallStop == false)
         {
 
             Assemble(Vector3.right);
@@ -92,66 +85,48 @@ public class MouseDetection : MonoBehaviour
         }
        
 
-
-    }
-    void MousePosition1()
-    {
-        if (mousePos.x <= 950 && mousePos.y >= 500)
-        {
-
-            Assemble(Vector3.forward);
-
-
-
-
-            topLeft = true;
-            topRight = false;
-            bottomLeft = false;
-            bottomRight = false;
-        }
-        else if (mousePos.x >= 951 && mousePos.y >= 500)
-        {
-            Assemble(Vector3.right);
-
-
-
-
-            topRight = true;
-            topLeft = false;
-            bottomLeft = false;
-            bottomRight = false;
-        }
-       else  if (mousePos.x <= 950 && mousePos.y <= 500)
-        {
-            Assemble(Vector3.left);
-
-            bottomLeft = true;
-            topLeft = false;
-            topRight = false;
-            bottomRight = false;
-        }
-       else  if (mousePos.x >= 951 && mousePos.y <= 500)
-        {
-            Assemble(Vector3.back);
-
-            bottomRight = true;
-            topLeft = false;
-            topRight = false;
-            bottomLeft = false;
-        }
-
         
     }
+   
 
 
     private void OnTriggerEnter(Collider other)
     {
-        isMoving = true;
-        Debug.Log("entertrigger");
+        if (other.tag == "TopWall")
+        {
+            topWallStop = true;
+        }
+        if (other.tag == "BottomWall")
+        {
+            bottomWallStop = true;
+        }
+        if (other.tag == "LeftWall")
+        {
+            leftWallStop = true;
+        }
+        if (other.tag == "RightWall")
+        {
+            rightWallStop = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
+        if (other.tag == "TopWall")
+        {
+            topWallStop = false;
+        }
+        if (other.tag == "BottomWall")
+        {
+            bottomWallStop = false;
+        }
+        if (other.tag == "LeftWall")
+        {
+            leftWallStop = false;
+        }
+        if (other.tag == "RightWall")
+        {
+            rightWallStop = false;
+        }
     }
 }
