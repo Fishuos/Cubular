@@ -41,6 +41,15 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
+        Vector3 pos = transform.position;
+
+        transform.position = new Vector3(
+            Mathf.Round(pos.x),
+            Mathf.Round(pos.y),
+            Mathf.Round(pos.z)
+        );
+       
+
         yield return new WaitForSeconds(0.5f);
 
         isMoving = false;
@@ -51,7 +60,7 @@ public class Player : MonoBehaviour
     {
         if (isMoving) return;
 
-        var anchor = transform.position + (Vector3.down + dir) * 1.1f;
+        var anchor = transform.position + (Vector3.down + dir) * 1f;
         var axis = Vector3.Cross(Vector3.up, dir);
         Vector3 rotationCenter = transform.position + Vector3.Scale((dir + Vector3.down), GetComponent<Renderer>().bounds.size) / 2;
         StartCoroutine(Roll(anchor, axis));
